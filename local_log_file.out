@@ -1,0 +1,348 @@
+vagrant@EPUAKHAW1264-VM-testu:~$ ss -ntlp
+State       Recv-Q Send-Q                Local Address:Port                               Peer Address:Port
+LISTEN      0      128                               *:22                                            *:*
+LISTEN      0      128                              :::22                                           :::*
+vagrant@EPUAKHAW1264-VM-testu:~$ sudo chef-client -o 'recipe[change1::default]'
+
+Starting Chef Client, version 14.0.202
+[2018-04-25T22:10:50+00:00] INFO: *** Chef 14.0.202 ***
+[2018-04-25T22:10:50+00:00] INFO: Platform: x86_64-linux
+[2018-04-25T22:10:50+00:00] INFO: Chef-client pid: 10675
+[2018-04-25T22:10:50+00:00] INFO: The plugin path /etc/chef/ohai/plugins does not exist. Skipping...
+[2018-04-25T22:10:52+00:00] WARN: Run List override has been provided.
+[2018-04-25T22:10:52+00:00] WARN: Original Run List: [role[basic_role], role[web], role[nginx_install]]
+[2018-04-25T22:10:52+00:00] WARN: Overridden Run List: [recipe[change1::default]]
+[2018-04-25T22:10:52+00:00] INFO: Run List is [recipe[change1::default]]
+[2018-04-25T22:10:52+00:00] INFO: Run List expands to [change1::default]
+[2018-04-25T22:10:52+00:00] INFO: Starting Chef Run for nodetest-ubuntu
+[2018-04-25T22:10:52+00:00] INFO: Running start handlers
+[2018-04-25T22:10:52+00:00] INFO: Start handlers complete.
+[2018-04-25T22:10:52+00:00] INFO: Error while reporting run start to Data Collector. URL: https://EPUAKHAW1264-VM-chef-server/organizations/4thcoffee/data-collector Exception: 404 -- 404 "Not Found"  (This is normal if you do not have Chef Automate)
+resolving cookbooks for run list: ["change1::default"]
+[2018-04-25T22:10:52+00:00] INFO: Loading cookbooks [change1@0.4.8]
+[2018-04-25T22:10:52+00:00] INFO: Skipping removal of obsoleted cookbooks from the cache
+Synchronizing Cookbooks:
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/recipes/default.rb in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/templates/default.conf.erb in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/recipes/update_page.rb in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/templates/default.page.erb in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/recipes/install_nginx.rb in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/recipes/update_server.rb in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/attributes/default.rb in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/.kitchen.yml in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/Berksfile.lock in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/chefignore in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/metadata.rb in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/.gitignore in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/LICENSE in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/push-jobs-5.2.0.tar.gz in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/README.md in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/script.ps1 in the cache.
+[2018-04-25T22:10:53+00:00] INFO: Storing updated cookbooks/change1/Berksfile in the cache.
+  - change1 (0.4.8)
+Installing Cookbook Gems:
+Compiling Cookbooks...
+[2018-04-25T22:10:53+00:00] INFO: Node platform is 'ubuntu'
+[2018-04-25T22:10:53+00:00] INFO: Start updating process of server
+[2018-04-25T22:10:53+00:00] INFO: Node platform is 'ubuntu'
+[2018-04-25T22:10:53+00:00] INFO: Installing of nginx server is finished
+[2018-04-25T22:10:53+00:00] INFO: Updating process is finished
+[2018-04-25T22:10:53+00:00] INFO: Start updating main page of server
+[2018-04-25T22:10:53+00:00] INFO: Process of updating main page is finished
+[2018-04-25T22:10:53+00:00] INFO: Updating process is finished
+Converging 8 resources
+Recipe: change1::install_nginx
+  * apt_package[nginx] action install[2018-04-25T22:10:53+00:00] INFO: Processing apt_package[nginx] action install (change1::install_nginx line 22)
+[2018-04-25T22:11:04+00:00] INFO: apt_package[nginx] installed nginx at 1.10.3-0ubuntu0.16.04.2
+
+    - install version 1.10.3-0ubuntu0.16.04.2 of package nginx
+  * service[nginx] action start[2018-04-25T22:11:04+00:00] INFO: Processing service[nginx] action start (change1::install_nginx line 26)
+ (up to date)
+  * service[nginx] action enable[2018-04-25T22:11:04+00:00] INFO: Processing service[nginx] action enable (change1::install_nginx line 26)
+ (up to date)
+Recipe: change1::update_server
+  * template[/etc/nginx/nginx.conf] action create[2018-04-25T22:11:05+00:00] INFO: Processing template[/etc/nginx/nginx.conf] action create (change1::update_server line 11)
+[2018-04-25T22:11:05+00:00] INFO: template[/etc/nginx/nginx.conf] backed up to /var/chef/backup/etc/nginx/nginx.conf.chef-20180425221105.079036
+[2018-04-25T22:11:05+00:00] INFO: template[/etc/nginx/nginx.conf] updated file contents /etc/nginx/nginx.conf
+
+    - update content in file /etc/nginx/nginx.conf from f642c0 to 636637
+    --- /etc/nginx/nginx.conf   2017-02-11 21:00:57.000000000 +0000
+    +++ /etc/nginx/.chef-nginx20180425-10675-1m9rvlg.conf       2018-04-25 22:11:05.070693659 +0000
+    @@ -1,86 +1,39 @@
+    -user www-data;
+     worker_processes auto;
+    +error_log /var/log/nginx/error.log;
+     pid /run/nginx.pid;
+
+     events {
+    -   worker_connections 768;
+    -   # multi_accept on;
+    +    worker_connections 1024;
+     }
+
+     http {
+    +    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    +                      '$status $body_bytes_sent "$http_referer" '
+    +                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    -   ##
+    -   # Basic Settings
+    -   ##
+    +    access_log  /var/log/nginx/access.log  main;
+
+    -   sendfile on;
+    -   tcp_nopush on;
+    -   tcp_nodelay on;
+    -   keepalive_timeout 65;
+    -   types_hash_max_size 2048;
+    -   # server_tokens off;
+    +    server {
+    +        listen       8080 default_server;
+    +        server_name  _;
+    +        root         /usr/share/nginx/html;
+    +        index        index.html;
+
+    -   # server_names_hash_bucket_size 64;
+    -   # server_name_in_redirect off;
+    +        # Load configuration files for the default server block.
+    +        include /etc/nginx/default.d/*.conf;
+
+    -   include /etc/nginx/mime.types;
+    -   default_type application/octet-stream;
+    +        location / {
+    +        }
+
+    -   ##
+    -   # SSL Settings
+    -   ##
+    +        error_page 404 /404.html;
+    +            location = /40x.html {
+    +        }
+
+    -   ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+    -   ssl_prefer_server_ciphers on;
+    +        error_page 500 502 503 504 /50x.html;
+    +            location = /50x.html {
+    +        }
+    +    }
+
+    -   ##
+    -   # Logging Settings
+    -   ##
+    -
+    -   access_log /var/log/nginx/access.log;
+    -   error_log /var/log/nginx/error.log;
+    -
+    -   ##
+    -   # Gzip Settings
+    -   ##
+    -
+    -   gzip on;
+    -   gzip_disable "msie6";
+    -
+    -   # gzip_vary on;
+    -   # gzip_proxied any;
+    -   # gzip_comp_level 6;
+    -   # gzip_buffers 16 8k;
+    -   # gzip_http_version 1.1;
+    -   # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    -
+    -   ##
+    -   # Virtual Host Configs
+    -   ##
+    -
+    -   include /etc/nginx/conf.d/*.conf;
+    -   include /etc/nginx/sites-enabled/*;
+     }
+    -
+    -
+    -#mail {
+    -#  # See sample authentication script at:
+    -#  # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+    -#
+    -#  # auth_http localhost/auth.php;
+    -#  # pop3_capabilities "TOP" "USER";
+    -#  # imap_capabilities "IMAP4rev1" "UIDPLUS";
+    -#
+    -#  server {
+    -#          listen     localhost:110;
+    -#          protocol   pop3;
+    -#          proxy      on;
+    -#  }
+    -#
+    -#  server {
+    -#          listen     localhost:143;
+    -#          protocol   imap;
+    -#          proxy      on;
+    -#  }
+    -#}
+    +### already_updated ###
+  * service[nginx] action restart[2018-04-25T22:11:05+00:00] INFO: Processing service[nginx] action restart (change1::update_server line 15)
+[2018-04-25T22:11:05+00:00] INFO: service[nginx] restarted
+
+    - restart service service[nginx]
+  * file[/etc/nginx/update_nginx.conf] action create[2018-04-25T22:11:05+00:00] INFO: Processing file[/etc/nginx/update_nginx.conf] action create (change1::update_server line 21)
+[2018-04-25T22:11:05+00:00] INFO: file[/etc/nginx/update_nginx.conf] created file /etc/nginx/update_nginx.conf
+
+    - create new file /etc/nginx/update_nginx.conf[2018-04-25T22:11:05+00:00] INFO: file[/etc/nginx/update_nginx.conf] updated file contents /etc/nginx/update_nginx.conf
+
+    - update content in file /etc/nginx/update_nginx.conf from none to 02b0d1
+    --- /etc/nginx/update_nginx.conf    2018-04-25 22:11:05.342693659 +0000
+    +++ /etc/nginx/.chef-update_nginx20180425-10675-r2srgx.conf 2018-04-25 22:11:05.342693659 +0000
+    @@ -1 +1,2 @@
+    +###_already_updated_###
+Recipe: change1::update_page
+  * template[/usr/share/nginx/html/index.html] action create[2018-04-25T22:11:05+00:00] INFO: Processing template[/usr/share/nginx/html/index.html] action create (change1::update_page line 11)
+[2018-04-25T22:11:05+00:00] INFO: template[/usr/share/nginx/html/index.html] backed up to /var/chef/backup/usr/share/nginx/html/index.html.chef-20180425221105.356499
+[2018-04-25T22:11:05+00:00] INFO: template[/usr/share/nginx/html/index.html] updated file contents /usr/share/nginx/html/index.html
+
+    - update content in file /usr/share/nginx/html/index.html from 38ffd4 to f15272
+    --- /usr/share/nginx/html/index.html        2017-01-31 15:01:11.000000000 +0000
+    +++ /usr/share/nginx/html/.chef-index20180425-10675-83fcae.html     2018-04-25 22:11:05.350693659 +0000
+    @@ -1,26 +1,15 @@
+    -<!DOCTYPE html>
+    -<html>
+    -<head>
+    -<title>Welcome to nginx!</title>
+    -<style>
+    -    body {
+    -        width: 35em;
+    -        margin: 0 auto;
+    -        font-family: Tahoma, Verdana, Arial, sans-serif;
+    -    }
+    -</style>
+    -</head>
+    -<body>
+    -<h1>Welcome to nginx!</h1>
+    -<p>If you see this page, the nginx web server is successfully installed and
+    -working. Further configuration is required.</p>
+    +<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+    +<!-- already_updated -->
+    +<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    +    <head>
+    +        <title>This is a BIG HEADER of page.</title>
+    +    </head>
+
+    -<p>For online documentation and support please refer to
+    -<a href="http://nginx.org/">nginx.org</a>.<br/>
+    -Commercial support is available at
+    -<a href="http://nginx.com/">nginx.com</a>.</p>
+    +    <body>
+
+    -<p><em>Thank you for using nginx.</em></p>
+    -</body>
+    +        <h1> This is a main body of web page. </h1>
+    +        <h3>Welcome to <strong>nginx</strong> on Fedora!</h3>
+    +
+    +    </body>
+     </html>
+  * service[nginx] action restart[2018-04-25T22:11:05+00:00] INFO: Processing service[nginx] action restart (change1::update_page line 16)
+[2018-04-25T22:11:05+00:00] INFO: service[nginx] restarted
+
+    - restart service service[nginx]
+  * file[/usr/share/nginx/update_index.html] action create[2018-04-25T22:11:05+00:00] INFO: Processing file[/usr/share/nginx/update_index.html] action create (change1::update_page line 22)
+[2018-04-25T22:11:05+00:00] INFO: file[/usr/share/nginx/update_index.html] created file /usr/share/nginx/update_index.html
+
+    - create new file /usr/share/nginx/update_index.html[2018-04-25T22:11:05+00:00] INFO: file[/usr/share/nginx/update_index.html] updated file contents /usr/share/nginx/update_index.html
+
+    - update content in file /usr/share/nginx/update_index.html from none to 02b0d1
+    --- /usr/share/nginx/update_index.html      2018-04-25 22:11:05.562693659 +0000
+    +++ /usr/share/nginx/.chef-update_index20180425-10675-pr7qno.html   2018-04-25 22:11:05.558693659 +0000
+    @@ -1 +1,2 @@
+    +###_already_updated_###
+[2018-04-25T22:11:05+00:00] WARN: Skipping final node save because override_runlist was given
+[2018-04-25T22:11:05+00:00] INFO: Chef Run complete in 13.017734405 seconds
+[2018-04-25T22:11:05+00:00] INFO: Skipping removal of unused files from the cache
+
+Running handlers:
+[2018-04-25T22:11:05+00:00] INFO: Running report handlers
+Running handlers complete
+[2018-04-25T22:11:05+00:00] INFO: Report handlers complete
+Chef Client finished, 7/9 resources updated in 14 seconds
+vagrant@EPUAKHAW1264-VM-testu:~$
+vagrant@EPUAKHAW1264-VM-testu:~$ ss -ntlp
+State       Recv-Q Send-Q                Local Address:Port                               Peer Address:Port
+LISTEN      0      128                               *:22                                            *:*
+LISTEN      0      128                               *:8080                                          *:*
+LISTEN      0      128                              :::22                                           :::*
+vagrant@EPUAKHAW1264-VM-testu:~$ curl localhost:8080
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!-- already_updated -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>This is a BIG HEADER of page.</title>
+    </head>
+
+    <body>
+
+        <h1> This is a main body of web page. </h1>
+        <h3>Welcome to <strong>nginx</strong> on Fedora!</h3>
+
+    </body>
+</html>
+vagrant@EPUAKHAW1264-VM-testu:~$ sudo chef-client -o 'recipe[change1::default]' -W
+Starting Chef Client, version 14.0.202
+[2018-04-25T22:11:37+00:00] INFO: *** Chef 14.0.202 ***
+[2018-04-25T22:11:37+00:00] INFO: Platform: x86_64-linux
+[2018-04-25T22:11:37+00:00] INFO: Chef-client pid: 11453
+[2018-04-25T22:11:37+00:00] INFO: The plugin path /etc/chef/ohai/plugins does not exist. Skipping...
+[2018-04-25T22:11:39+00:00] WARN: Run List override has been provided.
+[2018-04-25T22:11:39+00:00] WARN: Original Run List: [role[basic_role], role[web], role[nginx_install]]
+[2018-04-25T22:11:39+00:00] WARN: Overridden Run List: [recipe[change1::default]]
+[2018-04-25T22:11:39+00:00] INFO: Run List is [recipe[change1::default]]
+[2018-04-25T22:11:39+00:00] INFO: Run List expands to [change1::default]
+[2018-04-25T22:11:39+00:00] INFO: Starting Chef Run for nodetest-ubuntu
+[2018-04-25T22:11:39+00:00] INFO: Running start handlers
+[2018-04-25T22:11:39+00:00] INFO: Start handlers complete.
+resolving cookbooks for run list: ["change1::default"]
+[2018-04-25T22:11:39+00:00] INFO: Loading cookbooks [change1@0.4.8]
+[2018-04-25T22:11:39+00:00] INFO: Skipping removal of obsoleted cookbooks from the cache
+Synchronizing Cookbooks:
+  - change1 (0.4.8)
+Installing Cookbook Gems:
+Compiling Cookbooks...
+[2018-04-25T22:11:39+00:00] INFO: Node platform is 'ubuntu'
+[2018-04-25T22:11:39+00:00] INFO: Start updating process of server
+[2018-04-25T22:11:39+00:00] INFO: Node platform is 'ubuntu'
+[2018-04-25T22:11:39+00:00] INFO: Installing of nginx server is finished
+[2018-04-25T22:11:39+00:00] INFO: Updating process is finished
+[2018-04-25T22:11:39+00:00] INFO: Start updating main page of server
+[2018-04-25T22:11:39+00:00] INFO: Process of updating main page is finished
+[2018-04-25T22:11:39+00:00] INFO: Updating process is finished
+Converging 8 resources
+Recipe: change1::install_nginx
+  * apt_package[nginx] action install[2018-04-25T22:11:39+00:00] INFO: Processing apt_package[nginx] action install (change1::install_nginx line 22)
+ (up to date)
+  * service[nginx] action start[2018-04-25T22:11:39+00:00] INFO: Processing service[nginx] action start (change1::install_nginx line 26)
+
+    * Service status not available. Assuming a prior action would have installed the service.
+    * Assuming status of not running.
+     (up to date)
+  * service[nginx] action enable[2018-04-25T22:11:39+00:00] INFO: Processing service[nginx] action enable (change1::install_nginx line 26)
+
+    * Service status not available. Assuming a prior action would have installed the service.
+    * Assuming status of not running.
+     (up to date)
+Recipe: change1::update_server
+  * template[/etc/nginx/nginx.conf] action create[2018-04-25T22:11:40+00:00] INFO: Processing template[/etc/nginx/nginx.conf] action create (change1::update_server line 11)
+ (up to date)
+  * service[nginx] action restart[2018-04-25T22:11:40+00:00] INFO: Processing service[nginx] action restart (change1::update_server line 15)
+ (skipped due to not_if)
+  * file[/etc/nginx/update_nginx.conf] action create[2018-04-25T22:11:40+00:00] INFO: Processing file[/etc/nginx/update_nginx.conf] action create (change1::update_server line 21)
+ (up to date)
+Recipe: change1::update_page
+  * template[/usr/share/nginx/html/index.html] action create[2018-04-25T22:11:40+00:00] INFO: Processing template[/usr/share/nginx/html/index.html] action create (change1::update_page line 11)
+ (up to date)
+  * service[nginx] action restart[2018-04-25T22:11:40+00:00] INFO: Processing service[nginx] action restart (change1::update_page line 16)
+ (skipped due to not_if)
+  * file[/usr/share/nginx/update_index.html] action create[2018-04-25T22:11:40+00:00] INFO: Processing file[/usr/share/nginx/update_index.html] action create (change1::update_page line 22)
+ (up to date)
+[2018-04-25T22:11:40+00:00] WARN: Skipping final node save because override_runlist was given
+[2018-04-25T22:11:40+00:00] INFO: Chef Run complete in 0.594724766 seconds
+[2018-04-25T22:11:40+00:00] INFO: Skipping removal of unused files from the cache
+
+Running handlers:
+[2018-04-25T22:11:40+00:00] INFO: Running report handlers
+Running handlers complete
+[2018-04-25T22:11:40+00:00] INFO: Report handlers complete
+Chef Client finished, 0/9 resources would have been updated

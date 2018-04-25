@@ -1,0 +1,21 @@
+{
+  "name": "nginx_install",
+  "description": "Role for updating nginx.",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+    "chef_client": {
+      "interval": 240,
+      "splay": 10
+    }
+  },
+  "override_attributes": {
+
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[change1::default]"
+  ],
+  "env_run_lists": {
+
+  }
+}
