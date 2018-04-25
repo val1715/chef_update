@@ -1,0 +1,218 @@
+BOX_IMAGE_U = "ubuntu/trusty64"
+BOX_IMAGE_U16 = "ubuntu/xenial64"
+BOX_IMAGE_C = "centos/7"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "node0server" do |subconfig|
+    subconfig.vm.box = BOX_IMAGE_U16
+    subconfig.vm.network "private_network", ip: "10.10.10.9", netmask: "255.255.255.0"
+	subconfig.vm.network "public_network"
+	subconfig.vm.hostname = "EPUAKHAW1264-VM-chef-server"
+	subconfig.vm.provider "virtualbox" do |v|
+		v.name = "chef_server"
+		v.memory = 2048
+		end
+    subconfig.vm.provision "shell", inline: <<-SHELL
+      echo "hello host1 centos vm"
+	  
+	  sudo -s
+	  apt-get update -y
+	  adduser chefu
+	  su chefu
+	  cd
+	  exit
+	  
+	  mkdir /home/chefu/.ssh || echo "directory .ssh already exists"
+	  chmod 700 /home/chefu/.ssh && chown chefu:chefu /home/chefu/.ssh && touch /home/chefu/.ssh/authorized_keys
+	  cat /vagrant/provision/chefu.pub >> /home/chefu/.ssh/authorized_keys
+	  chmod 600 /home/chefu/.ssh/authorized_keys && chown chefu:chefu /home/chefu/.ssh/authorized_keys
+	  usermod -aG sudo chefu
+	  
+	  exit
+
+    SHELL
+  end
+
+  config.vm.define "node1c" do |subconfig|
+    subconfig.vm.box = BOX_IMAGE_C
+    subconfig.vm.network "private_network", ip: "10.10.10.10", netmask: "255.255.255.0"
+	subconfig.vm.network "public_network"
+	subconfig.vm.hostname = "EPUAKHAW1264-VM-chef-node01"
+#    subconfig.vm.synced_folder "host1/", "/v_host"
+    subconfig.vm.provision "shell", inline: <<-SHELL
+      echo "hello host1 centos vm"
+	  
+	  sudo -s
+#	  yum update -y
+	  adduser chefu
+
+	  mkdir /home/chefu/.ssh || echo "directory .ssh already exists"
+	  chmod 700 /home/chefu/.ssh && chown chefu:chefu /home/chefu/.ssh && touch /home/chefu/.ssh/authorized_keys
+	  cat /vagrant/provision/chefu.pub >> /home/chefu/.ssh/authorized_keys
+	  chmod 600 /home/chefu/.ssh/authorized_keys && chown chefu:chefu /home/chefu/.ssh/authorized_keys
+	  usermod -aG wheel chefu
+	    
+	  echo "%wheel ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel_group
+	  echo "%sudo ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/sudo_group
+	  
+	  exit
+
+    SHELL
+  end
+  
+    config.vm.define "node2u14" do |subconfig|
+    subconfig.vm.box = BOX_IMAGE_U
+    subconfig.vm.network "private_network", ip: "10.10.10.11", netmask: "255.255.255.0"
+	subconfig.vm.network "public_network"
+	subconfig.vm.hostname = "EPUAKHAW1264-VM-chef-node02"
+#    subconfig.vm.synced_folder "host1/", "/v_host"
+    subconfig.vm.provision "shell", inline: <<-SHELL
+      echo "hello host2 ubntu vm"
+	  sudo -s
+#	  apt-get update -y
+	  
+	  useradd chefu
+	  mkdir -p /home/chefu/.ssh || echo "directory .ssh already exists"
+	  chmod 700 /home/chefu/.ssh && chown chefu:chefu /home/chefu/.ssh && touch /home/chefu/.ssh/authorized_keys
+	  cat /vagrant/provision/chefu.pub >> /home/chefu/.ssh/authorized_keys
+	  chmod 600 /home/chefu/.ssh/authorized_keys && chown chefu:chefu /home/chefu/.ssh/authorized_keys
+	  usermod -aG sudo chefu
+	  
+	  echo "%wheel ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel_group
+	  echo "%sudo ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/sudo_group
+	  
+	  exit
+
+    SHELL
+  end
+  
+    config.vm.define "node3u16" do |subconfig|
+    subconfig.vm.box = BOX_IMAGE_U16
+    subconfig.vm.network "private_network", ip: "10.10.10.12", netmask: "255.255.255.0"
+	subconfig.vm.network "public_network"
+	subconfig.vm.hostname = "EPUAKHAW1264-VM-chef-node03"
+#    subconfig.vm.synced_folder "host1/", "/v_host"
+    subconfig.vm.provision "shell", inline: <<-SHELL
+      echo "hello host3 debian vm"
+	  sudo -s
+#	  apt-get update -y
+
+	  useradd chefu
+	  mkdir -p /home/chefu/.ssh || echo "directory .ssh already exists"
+	  chmod 700 /home/chefu/.ssh && chown chefu:chefu /home/chefu/.ssh && touch /home/chefu/.ssh/authorized_keys
+	  cat /vagrant/provision/chefu.pub >> /home/chefu/.ssh/authorized_keys
+	  chmod 600 /home/chefu/.ssh/authorized_keys && chown chefu:chefu /home/chefu/.ssh/authorized_keys
+	  usermod -aG sudo chefu
+	  	  
+	  echo "%wheel ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel_group
+	  echo "%sudo ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/sudo_group
+	  
+	  exit
+
+    SHELL
+  end
+  
+ ############################################################################# test nodes bootstrap ::
+ 
+    config.vm.define "nodetestc" do |subconfig|
+    subconfig.vm.box = BOX_IMAGE_C
+	subconfig.vm.network "public_network"
+	subconfig.vm.hostname = "EPUAKHAW1264-VM-testc"
+    subconfig.vm.provision "shell", inline: <<-SHELL
+      echo "##############################hello host centos bootstrap##############################"      
+	  echo "#######################################################################################"
+	  
+	  sudo -s
+#	  yum update -y
+	  adduser chefu 
+	  mkdir /home/chefu/.ssh || echo "directory .ssh already exists"
+	  chmod 700 /home/chefu/.ssh && chown chefu:chefu /home/chefu/.ssh && touch /home/chefu/.ssh/authorized_keys
+	  cat /vagrant/provision/chefu.pub >> /home/chefu/.ssh/authorized_keys
+	  chmod 600 /home/chefu/.ssh/authorized_keys && chown chefu:chefu /home/chefu/.ssh/authorized_keys
+	  usermod -aG wheel chefu
+	    
+	  echo "%wheel ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel_group
+	  echo "%sudo ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/sudo_group
+	  
+	  mkdir -p /etc/chef
+	  cp /vagrant/4thcoffee-validator.pem /etc/chef/validation.pem
+	  mkdir -p /var/log/chef/
+	  touch /var/log/chef/client.log
+	  
+	  cat << EOF > "/etc/chef/client.rb"
+chef_server_url  "https://EPUAKHAW1264-VM-chef-server/organizations/4thcoffee"
+node_name "nodetest-centos"
+validation_client_name "4thcoffee-validator"
+ssl_verify_mode :verify_none
+log_location  "/var/log/chef/client.log"
+Chef::Config[:log_level] = :info
+EOF
+
+	  cat << EOF > "/etc/chef/first_run.json"
+{"run_list":["role[basic_role]"]}
+EOF
+
+		curl -L https://omnitruck.chef.io/install.sh | bash -s -- -v 14
+
+		chef-client -j /etc/chef/first_run.json > /tmp/chef_first_run.log
+		
+		echo "##########################################################################################"
+		cat /tmp/chef_first_run.log | nl
+	  	echo "##########################################################################################"
+
+	  exit
+    SHELL
+  end
+  
+    config.vm.define "nodetestu" do |subconfig|
+    subconfig.vm.box = BOX_IMAGE_U16
+	subconfig.vm.network "public_network"
+	subconfig.vm.hostname = "EPUAKHAW1264-VM-testu"
+    subconfig.vm.provision "shell", inline: <<-SHELL
+      echo "##############################hello host ubuntu bootstrap##############################"      
+	  echo "#######################################################################################"
+	  
+	  sudo -s
+#	  apt-get update -y
+	  useradd chefu
+	  mkdir -p /home/chefu/.ssh || echo "directory .ssh already exists"
+	  chmod 700 /home/chefu/.ssh && chown chefu:chefu /home/chefu/.ssh && touch /home/chefu/.ssh/authorized_keys
+	  cat /vagrant/provision/chefu.pub >> /home/chefu/.ssh/authorized_keys
+	  chmod 600 /home/chefu/.ssh/authorized_keys && chown chefu:chefu /home/chefu/.ssh/authorized_keys
+	  usermod -aG sudo chefu
+	  	  
+	  echo "%wheel ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel_group
+	  echo "%sudo ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/sudo_group
+	  
+	  mkdir -p /etc/chef
+	  cp /vagrant/4thcoffee-validator.pem /etc/chef/validation.pem
+	  mkdir -p /var/log/chef/
+	  touch /var/log/chef/client.log
+	  
+	  cat << EOF > "/etc/chef/client.rb"
+chef_server_url  "https://EPUAKHAW1264-VM-chef-server/organizations/4thcoffee"
+node_name "nodetest-ubuntu"
+validation_client_name "4thcoffee-validator"
+ssl_verify_mode :verify_none
+log_location  "/var/log/chef/client.log"
+Chef::Config[:log_level] = :info
+EOF
+
+	  cat << EOF > "/etc/chef/first_run.json"
+{"run_list":["role[basic_role]"]}
+EOF
+
+		curl -L https://omnitruck.chef.io/install.sh | bash -s -- -v 14
+
+		chef-client -j /etc/chef/first_run.json > /tmp/chef_first_run.log
+		
+		echo "##########################################################################################"
+		cat /tmp/chef_first_run.log | nl 
+	  	echo "##########################################################################################"
+	  
+	  exit
+    SHELL
+  end
+
+end
