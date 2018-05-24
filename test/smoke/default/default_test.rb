@@ -1,18 +1,22 @@
-# # encoding: utf-8
 
-# Inspec test for recipe change1::default
+# all functionality testing in one File
 
-# The Inspec reference, with examples and extensive documentation, can be
-# found at http://inspec.io/docs/reference/resources/
-
-unless os.windows?
-  # This is an example test, replace with your own test.
-  describe user('root'), :skip do
-    it { should exist }
-  end
+describe package('nginx') do
+  it { should be_installed }
 end
 
-# This is an example test, replace it with your own test.
-describe port(80), :skip do
-  it { should_not be_listening }
+decribe service('nginx') do
+  it { should bu_running }
+end
+
+describe port(8080) do
+  it { should be_listening }
+end
+
+describe command('cat /etc/nginx/nginx.conf') do
+  its('stdout') { should match /8080/ }
+end
+
+describe command('cat /usr/share/nginx/html/index.html') do
+  its('stdout') { should match /text 33233/ }
 end

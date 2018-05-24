@@ -16,13 +16,13 @@ end
 service 'nginx' do
   action :restart
   #only_if { ::File.readlines('/usr/share/nginx/update_index.html').grep(/already_updated/).empty? }
-  not_if { ::File.exist?('/usr/share/nginx/update_index.html') }
+  # not_if { ::File.exist?('/usr/share/nginx/update_index.html') }
 end
 
-file '/usr/share/nginx/update_index.html' do
-  content '###_already_updated_###'
-  action :create
-end
+# file '/usr/share/nginx/update_index.html' do
+#   content '###_already_updated_###'
+#   action :create
+# end
 
 # service 'nginx' do
 #   subscribes :reload, 'file[/usr/share/nginx/html/newIndex.html]', :delayed

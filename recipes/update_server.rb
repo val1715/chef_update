@@ -15,12 +15,12 @@ end
 service 'nginx' do
   action :restart
   #only_if { ::File.readlines('/etc/nginx/update_nginx.conf').grep(/already_updated/).empty? }
-  not_if { ::File.exist?('/etc/nginx/update_nginx.conf') }
+  # not_if { ::File.exist?('/etc/nginx/update_nginx.conf') }
 end
 
-file '/etc/nginx/update_nginx.conf' do
-  content '###_already_updated_###'
-  action :create
-end
+# file '/etc/nginx/update_nginx.conf' do
+#   content '###_already_updated_###'
+#   action :create
+# end
 
 Chef::Log.info('Updating process is finished')
