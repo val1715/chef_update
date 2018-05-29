@@ -6,11 +6,11 @@
 
 Chef::Log.info("Node platform is '#{node['platform']}'")
 
+include_recipe 'apt::default'
+
 if platform_family?('ubuntu')
-  apt_update 'daily' do
-    frequency 86_400
-    action :periodic
-  end
+  # https://github.com/chef-cookbooks/build-essential/issues/41
+  # not running update before installing packages
 end
 
 if platform_family?('rhel')

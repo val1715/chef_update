@@ -6,3 +6,5 @@ description 'Installs/Configures change1'
 long_description 'Installs/Configures change1'
 version '0.4.8'
 chef_version '>= 12.1' if respond_to?(:chef_version)
+
+depends 'apt', '~> 7.0.0'
